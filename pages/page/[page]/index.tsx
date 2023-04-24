@@ -1,4 +1,4 @@
-import { HandlePostDate, Posts } from "@/pages/api/posts";
+import { HandlePostDate, getAllPostsWithFrontMatter } from "@/pages/api/posts";
 import { Post } from "@/pages/api/types";
 import { GetStaticProps } from "next";
 import Link from "next/link";
@@ -10,11 +10,7 @@ interface Props {
 }
 
 export async function getStaticPaths() {
-  const posts = Posts();
-
-  if (posts.length === 0) {
-    // TODO: jump to 404
-  }
+  const posts = getAllPostsWithFrontMatter("_posts");
 
   return {
     paths: [
@@ -36,7 +32,7 @@ interface Params extends ParsedUrlQuery {
 
 export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
   const { page } = params as Params;
-  const posts = Posts();
+  const posts = getAllPostsWithFrontMatter("_posts");
   const index = parseInt(page, 10);
 
   return {
@@ -52,12 +48,8 @@ const Page: FC<Props> = ({ posts }) => {
       {posts.map((post) => {
         const date = HandlePostDate(post);
         return (
-          <div key={post.file}>
-            <Link
-              href={`/${date.year}/${date.month}/${
-                date.day
-              }/${post.file.substring(0, post.file.lastIndexOf("."))}`}
-            >
+          <div key={post.slug}>
+            <Link href={`/${date.year}/${date.month}/${date.day}/${post.slug}`}>
               {post.frontMatter["title"]}
             </Link>
           </div>
