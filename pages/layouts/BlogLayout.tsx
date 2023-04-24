@@ -1,6 +1,7 @@
 import { BlogLayoutProps } from "../api/types";
+import { FC } from "react";
 
-export const BlogLayout: React.FC<BlogLayoutProps> = ({
+export const BlogLayout: FC<BlogLayoutProps> = ({
   children,
   frontMatter,
 }) => {

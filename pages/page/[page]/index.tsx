@@ -1,12 +1,12 @@
 import { HandlePostDate, getAllPostsWithFrontMatter } from "@/pages/api/posts";
-import { Post } from "@/pages/api/types";
+import { Post, PostWithFrontMatter } from "@/pages/api/types";
 import { GetStaticProps } from "next";
 import Link from "next/link";
 import { ParsedUrlQuery } from "querystring";
 import React, { FC } from "react";
 
 interface Props {
-  posts: Post[];
+  posts: PostWithFrontMatter[];
 }
 
 export async function getStaticPaths() {
