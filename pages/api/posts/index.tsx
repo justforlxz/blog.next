@@ -10,7 +10,10 @@ export async function getFiles(dataType: string) {
 }
 
 export function getPostBySlug(dataType: string, slug: string): Post {
-  const { data, excerpt, content } = matter.read(path.join(root, "source", dataType, `${slug}.md`), {excerpt_separator: '<!-- more -->'});
+  const { data, excerpt, content } = matter.read(
+    path.join(root, "source", dataType, `${slug}.md`),
+    { excerpt_separator: "<!-- more -->" }
+  );
   // NOTE: mother fucker Date type
   data.date = data.date.toString();
   return {
@@ -29,19 +32,34 @@ export function getAllPostsWithFrontMatter(
     .filter((file) => path.extname(file) == ".md");
 
   // @ts-ignore
-  return files.reduce((allPosts, postSlug) => {
-  const { data, excerpt } = matter.read(path.join(root, "source", dataType, postSlug), {excerpt_separator: '<!-- more -->'});
-    // NOTE: mother fucker Date type
-    data.date = data.date.toString();
-    return [
-      {
+  return files
+    .map((postSlug) => {
+      const { data, excerpt } = matter.read(
+        path.join(root, "source", dataType, postSlug),
+        { excerpt_separator: "<!-- more -->" }
+      );
+      // NOTE: mother fucker Date type
+      data.date = data.date.toString();
+      return {
         frontMatter: data,
         slug: postSlug.replace(".md", ""),
         excerpt: excerpt,
-      },
-      ...allPosts,
-    ];
-  }, []);
+      };
+    })
+    .sort((a, b) => {
+      const A = Date.parse(a.frontMatter["date"]);
+      const B = Date.parse(b.frontMatter["date"]);
+
+      if (A > B) {
+        return -1;
+      }
+
+      if (A < B) {
+        return 1;
+      }
+
+      return 0;
+    });
 }
 
 export function HandlePostDate(post: PostWithFrontMatter): {

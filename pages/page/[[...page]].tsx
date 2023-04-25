@@ -53,14 +53,12 @@ interface Params extends ParsedUrlQuery {
 
 export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
   const { page } = params as Params;
+  const posts = getPagesData();
+
   let index = 0;
   if (page) {
     index = parseInt(page, 10);
   }
-
-  const posts = getPagesData();
-
-  console.log(index);
 
   return {
     props: {
@@ -73,7 +71,6 @@ export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
 };
 
 const Page: FC<Props> = ({ page, posts, hasNext, hasPrevious }) => {
-  console.log(page);
   return (
     <div>
       {posts.map((post) => {
