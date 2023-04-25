@@ -7,9 +7,9 @@ import {
 import { GetStaticProps } from "next";
 import { ParsedUrlQuery } from "querystring";
 import ReactMarkdown from "react-markdown";
-import { BlogLayout } from "@/pages/layouts/BlogLayout";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/cjs/styles/prism";
+import BlogLayout from "@/components/BlogLayout";
 
 interface Props {
   post: Post;

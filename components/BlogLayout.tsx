@@ -1,10 +1,7 @@
-import { BlogLayoutProps } from "../api/types";
+import { BlogLayoutProps } from "@/pages/api/types";
 import { FC } from "react";
 
-export const BlogLayout: FC<BlogLayoutProps> = ({
-  children,
-  frontMatter,
-}) => {
+const BlogLayout: FC<BlogLayoutProps> = ({ children, frontMatter }) => {
   return (
     <div>
       <div>
@@ -15,3 +12,5 @@ export const BlogLayout: FC<BlogLayoutProps> = ({
     </div>
   );
 };
+
+export default BlogLayout;
